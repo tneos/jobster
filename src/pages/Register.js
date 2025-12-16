@@ -64,7 +64,13 @@ function Register() {
         <h3>{values.isMember ? "Login" : "Register"}</h3>
         {/* name field */}
         {!values.isMember && (
-          <FormRow type="text" name="name" id="name" value={values.name} onChange={handleChange} />
+          <FormRow
+            type="text"
+            name="name"
+            id="name"
+            value={values.name}
+            handleChange={handleChange}
+          />
         )}
 
         {/* email field */}
@@ -73,7 +79,7 @@ function Register() {
           name="email"
           id="email"
           value={values.email}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
         {/* password field */}
         <FormRow
@@ -81,7 +87,7 @@ function Register() {
           name="password"
           id="password"
           value={values.password}
-          onChange={handleChange}
+          handleChange={handleChange}
         />
         <button type="submit" className="btn btn-block" disabled={isLoading}>
           {isLoading ? "Loading..." : "Submit"}

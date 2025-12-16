@@ -1,8 +1,8 @@
-function FormRow({type, name, id, value, onChange, labelText}) {
+function FormRow({type, name, id, value, handleChange, labelText}) {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
-        {name}
+        {labelText || name}
       </label>
       <input
         type={type}
@@ -10,7 +10,7 @@ function FormRow({type, name, id, value, onChange, labelText}) {
         name={name}
         id={id}
         autoComplete="off"
-        onChange={onChange}
+        onChange={handleChange}
         className="form-input"
       />
     </div>
