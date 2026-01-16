@@ -8,7 +8,7 @@ function FormRow({type, name, id, value, handleChange, labelText}) {
         type={type}
         value={value}
         name={name}
-        id={id}
+        id={name}
         autoComplete="off"
         onChange={handleChange}
         className="form-input"
