@@ -1,6 +1,7 @@
 import {HiChevronDoubleLeft, HiChevronDoubleRight} from "react-icons/hi";
 import Wrapper from "../assets/wrappers/PageBtnContainer";
 import {useSelector, useDispatch} from "react-redux";
+import {changePage} from "../features/allJobs/allJobsSlice";
 
 const PageBtnContainer = () => {
   const {numOfPages, page} = useSelector(store => store.allJobs);
@@ -11,13 +12,23 @@ const PageBtnContainer = () => {
     return index + 1;
   });
 
-  // Placeholders for next and previous page functions
+  // Next and previous page functionality
   const nextPage = () => {
-    console.log("next page");
+    let newPage = page + 1;
+    // Go back to first page if next increase larger than numOfPages
+    if (newPage > numOfPages) {
+      newPage = 1;
+    }
+    dispatch(changePage(newPage));
   };
 
   const prevPage = () => {
-    console.log("previous page");
+    let newPage = page - 1;
+    // Go back to last page if next decrease less than 1
+    if (newPage < 1) {
+      newPage = numOfPages;
+    }
+    dispatch(changePage(newPage));
   };
   return (
     <Wrapper>
@@ -25,13 +36,21 @@ const PageBtnContainer = () => {
         <HiChevronDoubleLeft />
         prev
       </button>
-      {pages.map(pageNumber => {
-        return (
-          <button type="button" key={pageNumber} onClick={() => console.log("move to next page")}>
-            {pageNumber}
-          </button>
-        );
-      })}
+      <div className="btn-container">
+        {pages.map(pageNumber => {
+          return (
+            <button
+              type="button"
+              key={pageNumber}
+              className={pageNumber === page ? "pageBtn active" : "pageBtn"}
+              onClick={() => dispatch(changePage(pageNumber))}
+            >
+              {pageNumber}
+            </button>
+          );
+        })}
+      </div>
+
       <button type="button" className="next-btn" onClick={nextPage}>
         <HiChevronDoubleRight />
         next
