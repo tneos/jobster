@@ -9,11 +9,12 @@ import PageBtnContainer from "./PageBtnContainer";
 const JobsContainer = () => {
   const dispatch = useDispatch();
   // Destructure jobs array and isLoading value from state
-  const {jobs, isLoading, page, totalJobs, numOfPages} = useSelector(store => store.allJobs);
+  const {jobs, isLoading, page, totalJobs, numOfPages, search, searchStatus, searchType, sort} =
+    useSelector(store => store.allJobs);
 
   useEffect(() => {
     dispatch(getAllJobs());
-  }, [dispatch]);
+  }, [dispatch, page, search, searchStatus, searchType, sort]);
 
   if (isLoading) {
     return <Loading />;

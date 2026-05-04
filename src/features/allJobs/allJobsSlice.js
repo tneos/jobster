@@ -22,7 +22,14 @@ const initialState = {
 };
 
 export const getAllJobs = createAsyncThunk("allJobs/getJobs", async (_, thunkAPI) => {
-  let url = "/jobs";
+  const {page, search, searchStatus, searchType, sort} = thunkAPI.getState().allJobs;
+
+  // Add dynamic values to query string
+  let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
+  // Add search value if one exists
+  if (search) {
+    url = url + `&search=${search}`;
+  }
 
   try {
     const response = await customFetch(url);
@@ -54,7 +61,8 @@ const allJobsSlice = createSlice({
       state.isLoading = false;
     },
     handleChange: (state, {payload: {name, value}}) => {
-      // state.page = 1 for pagination
+      // Get back to page 1 for every change in state values
+      state.page = 1;
       state[name] = value;
     },
     clearFilters: state => {
