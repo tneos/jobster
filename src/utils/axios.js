@@ -1,5 +1,6 @@
 import axios from "axios";
 import {getUserFromLocalStorage} from "./localStorage";
+import {clearStore} from "../features/user/userSlice";
 
 const customFetch = axios.create({
   baseURL: "https://redux-toolkit-jobster-api-server.onrender.com/api/v1",
@@ -15,4 +16,12 @@ customFetch.interceptors.request.use(config => {
   return config;
 });
 
+export const checkForUnauthorizedResponse = (error, thunkAPI) => {
+  // Authentication error
+  if (error.response.status === 401) {
+    thunkAPI.dispatch(clearStore());
+
+    return thunkAPI.rejectWithValue("Unauthorized! Logging out...");
+  }
+};
 export default customFetch;
