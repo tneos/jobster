@@ -6,7 +6,7 @@ import {useState, useMemo} from "react";
 
 const SearchContainer = () => {
   const [localSearch, setLocalSearch] = useState("");
-  const {isLoading, search, searchStatus, searchType, sort, sortOptions} = useSelector(
+  const {isLoading, searchStatus, searchType, sort, sortOptions} = useSelector(
     store => store.allJobs,
   );
 
@@ -24,6 +24,7 @@ const SearchContainer = () => {
 
   // 2sec delay before request is sent
   const debounce = () => {
+    console.log("Debounce called");
     let timeoutID;
     return e => {
       setLocalSearch(e.target.value);
@@ -35,7 +36,11 @@ const SearchContainer = () => {
   };
 
   // Run debounce when application loads
-  const optimizedDebounce = useMemo(() => debounce(), []);
+  const optimizedDebounce = useMemo(
+    () => debounce(),
+    // eslint-disable-next-line
+    [],
+  );
   return (
     <Wrapper>
       <form className="form">
